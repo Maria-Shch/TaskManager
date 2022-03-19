@@ -11,7 +11,7 @@ public class Task {
         this.description = description;
         this.date = date;
     }
-
+    
     public String getTitle() {
         return title;
     }

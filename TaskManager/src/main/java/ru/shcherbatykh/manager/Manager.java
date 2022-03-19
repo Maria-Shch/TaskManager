@@ -2,6 +2,7 @@ package ru.shcherbatykh.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 /*
 Планировщик задач состоит из 
@@ -17,25 +18,31 @@ import org.springframework.stereotype.Component;
 */
 
 @Component
-public class Manager {
+@Qualifier
+public class Manager implements Managerable{
     private List<Task> listTasks = new ArrayList<>();
 
+    @Override
     public List<Task> getListTasks() {
         return listTasks;
     }
     
-    public boolean addTask(Task task){
-        return listTasks.add(task);
+    @Override
+    public boolean addTask(String title, String description, String date){
+        return listTasks.add(new Task(title, description, date));
     }
     
+    @Override
     public boolean removeTask(int indexTask){
         return listTasks.remove(indexTask) != null;
     }
     
+    @Override
     public boolean isEmptyListTasks(){
         return listTasks.isEmpty();
     }
     
+    @Override
     public boolean isPresentTaskByNumber(int numberOfTask){
         return numberOfTask <= listTasks.size() && numberOfTask > 0;
     }

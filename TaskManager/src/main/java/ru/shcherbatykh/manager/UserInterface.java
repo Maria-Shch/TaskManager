@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserInterface {
 
     @Autowired
-    Manager manager;
+    Managerable manager;
+    @Autowired
+    Printable printer;
 
     private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
 
@@ -29,7 +31,7 @@ public class UserInterface {
 
             switch (menuSelect) {
                 case 1 -> {
-                    Printer.printListTask(manager.getListTasks());
+                    printer.printListTask(manager.getListTasks());
                 }
                 case 2 -> {
                     addingTask();
@@ -62,7 +64,7 @@ public class UserInterface {
         System.out.println("Введите дату новой задачи:");
         String date = checkString();
 
-        if (manager.addTask(new Task(title, description, date))) {
+        if (manager.addTask(title, description, date)) {
             System.out.println("Задача успешно добавлена");
         }
     }
@@ -96,25 +98,6 @@ public class UserInterface {
             } else {
                 in.nextLine();
                 System.out.println("Требуется значение типа int, попробуйте снова...");
-            }
-        }
-        return val;
-    }
-
-    private float checkFloat() {
-        float val = 0;
-        while (true) {
-            if (in.hasNextFloat()) {
-                val = in.nextFloat();
-            } else {
-                in.nextLine();
-                System.out.println("Требуется значение типа float, попробуйте снова...");
-            }
-            if (val != 0) {
-                break;
-            } else {
-                in.nextLine();
-                System.out.println("Требуется значение не равное нулю, попробуйте снова...");
             }
         }
         return val;

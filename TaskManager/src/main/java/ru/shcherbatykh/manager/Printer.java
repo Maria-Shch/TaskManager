@@ -1,9 +1,14 @@
 package ru.shcherbatykh.manager;
 
 import java.util.List;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
-public class Printer {
-    public static void printListTask(List<Task> tasksList) {
+@Component
+@Qualifier
+public class Printer implements Printable{
+    @Override
+    public void printListTask(List<Task> tasksList) {
         if (tasksList.isEmpty()) System.out.println("У вас нет ни одной задачи");
         else {
             int number = 1;
