@@ -1,5 +1,8 @@
 package ru.shcherbatykh.manager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,19 +57,42 @@ public class UserInterface {
 
     private void addingTask() {
         System.out.println("Добавление задачи...");
-        
+
         System.out.println("Введите название новой задачи:");
         String title = checkString();
-        
+
         System.out.println("Введите описание новой задачи:");
         String description = checkString();
-        
-        System.out.println("Введите дату новой задачи:");
-        String date = checkString();
+
+        Date date = null;
+        while (date == null) {
+            System.out.println("Введите дату новой задачи в формате дд.мм.гггг:");
+            String dateStr = checkString();
+
+            System.out.println("Введите время новой задачи в формате чч:мм:");
+            String timeStr = checkString();
+            date = getDate(dateStr, timeStr);
+        }
 
         if (manager.addTask(title, description, date)) {
             System.out.println("Задача успешно добавлена");
         }
+    }
+
+    private Date getDate(String dateStr, String timeStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        dateFormat.setLenient(false);
+        String dateAndTimeForParse = dateStr + " " + timeStr;
+        Date date = null;
+
+        try {
+            date = dateFormat.parse(dateAndTimeForParse);
+        } catch (ParseException ex) {
+            date = null;
+            System.out.println("Дата или время были введены неверно");
+        }
+
+        return date;
     }
 
     private void removingTask() {
@@ -76,7 +102,7 @@ public class UserInterface {
             System.out.println("Удаление задачи...");
             System.out.println("Введите номер задачи:");
             int numberOfTask = checkInt();
-            int indexOfTask = numberOfTask-1;
+            int indexOfTask = numberOfTask - 1;
             if (manager.isPresentTaskByNumber(numberOfTask)) {
                 if (manager.removeTask(indexOfTask)) {
                     System.out.println("Задача под номером " + numberOfTask + " успешно удалена.");

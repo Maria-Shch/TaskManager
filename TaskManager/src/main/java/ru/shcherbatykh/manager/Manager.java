@@ -1,6 +1,7 @@
 package ru.shcherbatykh.manager;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -28,7 +29,7 @@ public class Manager implements Managerable{
     }
     
     @Override
-    public boolean addTask(String title, String description, String date){
+    public boolean addTask(String title, String description, Date date){
         return listTasks.add(new Task(title, description, date));
     }
     
