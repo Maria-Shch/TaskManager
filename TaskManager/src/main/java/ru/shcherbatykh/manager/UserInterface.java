@@ -1,9 +1,12 @@
 package ru.shcherbatykh.manager;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +22,7 @@ public class UserInterface {
 
     private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
 
-    public void startMenu() {
+    public void startMenu() throws Exception {
         boolean flag = true;
 
         String menu = "1 - Вывести запланированные задачи\n"
@@ -55,7 +58,7 @@ public class UserInterface {
         }
     }
 
-    private void addingTask() {
+    private void addingTask() throws Exception {
         System.out.println("Добавление задачи...");
 
         System.out.println("Введите название новой задачи:");
@@ -77,6 +80,7 @@ public class UserInterface {
         if (manager.addTask(title, description, date)) {
             System.out.println("Задача успешно добавлена");
         }
+        saveListTaskToFile();
     }
 
     private Date getDate(String dateStr, String timeStr) {
@@ -84,18 +88,18 @@ public class UserInterface {
         dateFormat.setLenient(false);
         String dateAndTimeForParse = dateStr + " " + timeStr;
         Date date = null;
-
+        
+        //добавить, что добавлена дата и время, которые еще не прошли
         try {
             date = dateFormat.parse(dateAndTimeForParse);
         } catch (ParseException ex) {
             date = null;
             System.out.println("Дата или время были введены неверно");
         }
-
         return date;
     }
 
-    private void removingTask() {
+    private void removingTask() throws Exception {
         if (manager.isEmptyListTasks()) {
             System.out.println("Ваш список задач пуст, вы не можете ничего удалить.");
         } else {
@@ -113,6 +117,15 @@ public class UserInterface {
                 System.out.println("Задачи под таким номер не существует.");
             }
         }
+        saveListTaskToFile();
+    }
+
+    private void saveListTaskToFile() throws Exception {
+        JSONObject sampleObject = new JSONObject();
+        for (int i = 0; i < manager.getListTasks().size(); i++) {
+            sampleObject.put(i, manager.getListTasks().get(i));
+        }
+        Files.write(Paths.get(Config.PATH), sampleObject.toJSONString().getBytes());
     }
 
     private int checkInt() {

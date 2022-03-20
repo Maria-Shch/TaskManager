@@ -1,8 +1,8 @@
 package ru.shcherbatykh.manager;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 /*
@@ -15,13 +15,14 @@ import org.springframework.stereotype.Component;
     добавление задачи
     удаление задачи (после того как пользователь или удалил или завершил её)
     отложить задачу 
-    сохранение на диск в виде XML
+    сохранение на диск в виде JSON
 */
 
 @Component
 @Qualifier
 public class Manager implements Managerable{
-    private List<Task> listTasks = new ArrayList<>();
+    @Autowired
+    private List<Task> listTasks;
 
     @Override
     public List<Task> getListTasks() {
