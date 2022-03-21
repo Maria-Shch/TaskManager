@@ -1,5 +1,6 @@
 package ru.shcherbatykh.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Task {
@@ -8,7 +9,6 @@ public class Task {
     private String description;
     private Date date;
     private String contactDetails;
-    //добавить котнтакты
 
     public Task() {
     }
@@ -30,6 +30,11 @@ public class Task {
 
     public Date getDate() {
         return date;
+    }
+    
+    public String getDateForPrint() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy 'в' HH:mm");
+        return dateFormat.format(date);
     }
 
     public String getContactDetails() {
