@@ -75,6 +75,8 @@ public class UserInterface {
             System.out.println("Введите время новой задачи в формате чч:мм:");
             String timeStr = checkString();
             date = getDate(dateStr, timeStr);
+            if (date!=null)
+                date = checkDateNotPassed(date);
         }
         
         System.out.println("Введите контактные данные:");
@@ -163,5 +165,16 @@ public class UserInterface {
         System.out.println("Нажмите Enter чтобы продолжить...");
         in.next();
         in.nextLine();
+    }
+
+    private Date checkDateNotPassed(Date date) {
+        Date dateNow = new Date();
+        if(dateNow.before(date)){
+            return date;
+        }
+        else{
+            System.out.println("Вы ввели дату и время, которые уже прошли.");
+            return null;
+        }
     }
 }
