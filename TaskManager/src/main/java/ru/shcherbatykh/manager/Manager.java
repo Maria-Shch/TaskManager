@@ -30,8 +30,8 @@ public class Manager implements Managerable{
     }
     
     @Override
-    public boolean addTask(String title, String description, Date date){
-        return listTasks.add(new Task(title, description, date));
+    public boolean addTask(String title, String description, Date date, String contactDetails){
+        return listTasks.add(new Task(title, description, date, contactDetails));
     }
     
     @Override

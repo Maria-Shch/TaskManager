@@ -76,8 +76,11 @@ public class UserInterface {
             String timeStr = checkString();
             date = getDate(dateStr, timeStr);
         }
+        
+        System.out.println("Введите контактные данные:");
+        String contactDetails = checkString();
 
-        if (manager.addTask(title, description, date)) {
+        if (manager.addTask(title, description, date, contactDetails)) {
             System.out.println("Задача успешно добавлена");
         }
         saveListTaskToFile();

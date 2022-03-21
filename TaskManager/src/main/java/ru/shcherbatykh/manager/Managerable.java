@@ -6,7 +6,7 @@ import java.util.List;
 public interface Managerable {
     List<Task> getListTasks();
     
-    boolean addTask(String title, String description, Date date);
+    boolean addTask(String title, String description, Date date, String contactDetails);
     
     boolean removeTask(int indexTask);
     

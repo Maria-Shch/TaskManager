@@ -7,15 +7,17 @@ public class Task {
     private String title;
     private String description;
     private Date date;
+    private String contactDetails;
     //добавить котнтакты
 
     public Task() {
     }
 
-    public Task(String title, String description, Date date) {
+    public Task(String title, String description, Date date, String contactDetails) {
         this.title = title;
         this.description = description;
         this.date = date;
+        this.contactDetails = contactDetails;
     }
 
     public String getTitle() {
@@ -30,8 +32,12 @@ public class Task {
         return date;
     }
 
+    public String getContactDetails() {
+        return contactDetails;
+    }
+
     @Override
     public String toString() {
-        return "{\"title\":\"" + title + "\", \"description\":\"" + description + "\", \"date\":\"" + date.getTime() + "\"}";
+        return "{\"title\":\"" + title + "\", \"description\":\"" + description + "\", \"date\":\"" + date.getTime() + "\", \"contactDetails\":\"" + contactDetails + "\"}";
     }
 }
