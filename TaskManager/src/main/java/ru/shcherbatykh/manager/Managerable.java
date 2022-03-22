@@ -13,4 +13,6 @@ public interface Managerable {
     boolean isEmptyListTasks();
     
     boolean isPresentTaskByNumber(int numberOfTask);
+    
+    void saveListTaskToFile() throws Exception;
 }

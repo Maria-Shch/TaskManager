@@ -41,9 +41,11 @@ public class UserInterface {
                 }
                 case 2 -> {
                     addingTask();
+                    manager.saveListTaskToFile();
                 }
                 case 3 -> {
                     removingTask();
+                    manager.saveListTaskToFile();
                 }
                 case 4 -> {
                     flag = false;
@@ -75,17 +77,17 @@ public class UserInterface {
             System.out.println("Введите время новой задачи в формате чч:мм:");
             String timeStr = checkString();
             date = getDate(dateStr, timeStr);
-            if (date!=null)
+            if (date != null) {
                 date = checkDateNotPassed(date);
+            }
         }
-        
+
         System.out.println("Введите контактные данные:");
         String contactDetails = checkString();
 
         if (manager.addTask(title, description, date, contactDetails)) {
             System.out.println("Задача успешно добавлена");
         }
-        saveListTaskToFile();
     }
 
     private Date getDate(String dateStr, String timeStr) {
@@ -93,8 +95,7 @@ public class UserInterface {
         dateFormat.setLenient(false);
         String dateAndTimeForParse = dateStr + " " + timeStr;
         Date date = null;
-        
-        //добавить, что добавлена дата и время, которые еще не прошли
+
         try {
             date = dateFormat.parse(dateAndTimeForParse);
         } catch (ParseException ex) {
@@ -122,15 +123,7 @@ public class UserInterface {
                 System.out.println("Задачи под таким номер не существует.");
             }
         }
-        saveListTaskToFile();
-    }
-
-    private void saveListTaskToFile() throws Exception {
-        JSONObject sampleObject = new JSONObject();
-        for (int i = 0; i < manager.getListTasks().size(); i++) {
-            sampleObject.put(i, manager.getListTasks().get(i));
-        }
-        Files.write(Paths.get(Config.PATH), sampleObject.toJSONString().getBytes());
+        manager.saveListTaskToFile();
     }
 
     private int checkInt() {
@@ -161,20 +154,19 @@ public class UserInterface {
         return str;
     }
 
+    private Date checkDateNotPassed(Date date) {
+        Date dateNow = new Date();
+        if (dateNow.before(date)) {
+            return date;
+        } else {
+            System.out.println("Вы ввели дату и время, которые уже прошли.");
+            return null;
+        }
+    }
+
     private void waitActionFromUser() {
         System.out.println("Нажмите Enter чтобы продолжить...");
         in.next();
         in.nextLine();
-    }
-
-    private Date checkDateNotPassed(Date date) {
-        Date dateNow = new Date();
-        if(dateNow.before(date)){
-            return date;
-        }
-        else{
-            System.out.println("Вы ввели дату и время, которые уже прошли.");
-            return null;
-        }
     }
 }

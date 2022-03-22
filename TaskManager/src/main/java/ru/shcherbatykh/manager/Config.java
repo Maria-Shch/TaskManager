@@ -22,7 +22,7 @@ public class Config {
 
     @Bean
     public List<Task> getListTasks() throws IOException, Exception {
-        JSONObject jsonObject = (JSONObject) readJsonSimpleDemo(PATH);
+        JSONObject jsonObject = (JSONObject) readJsonFromFile(PATH);
         ObjectMapper objectMapper = new ObjectMapper();
         List<Task> tasks = new ArrayList<>();
         if (jsonObject != null && !jsonObject.isEmpty()) {
@@ -34,7 +34,7 @@ public class Config {
         return tasks;
     }
 
-    public static Object readJsonSimpleDemo(String filename) throws FileNotFoundException, IOException {
+    public static Object readJsonFromFile(String filename) throws FileNotFoundException, IOException {
         FileReader reader = null;
         try {
             reader = new FileReader(filename);

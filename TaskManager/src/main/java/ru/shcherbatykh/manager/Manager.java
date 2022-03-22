@@ -1,7 +1,10 @@
 package ru.shcherbatykh.manager;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -42,6 +45,15 @@ public class Manager implements Managerable{
     @Override
     public boolean isEmptyListTasks(){
         return listTasks.isEmpty();
+    }
+    
+    @Override
+    public void saveListTaskToFile() throws Exception {
+        JSONObject jsonObj = new JSONObject();
+        for (int i = 0; i < getListTasks().size(); i++) {
+            jsonObj.put(i, getListTasks().get(i));
+        }
+        Files.write(Paths.get(Config.PATH), jsonObj.toJSONString().getBytes());
     }
     
     @Override
