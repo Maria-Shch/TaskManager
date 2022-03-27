@@ -1,12 +1,9 @@
 package ru.shcherbatykh.manager;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +13,9 @@ import org.springframework.stereotype.Component;
 public class UserInterface {
 
     @Autowired
-    Managerable manager;
+    Manager manager;
     @Autowired
-    Printable printer;
+    Printer printer;
 
     private static final Scanner in = new Scanner(System.in).useDelimiter("\n");
 
